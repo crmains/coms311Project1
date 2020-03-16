@@ -31,6 +31,9 @@ public class Interval {
      */
     public int getHigh(){ return this.high; }
 
+    public String toString(){
+        return "[" + this.low + "," + this.high + "]";
+    }
     /**
      * Returns true of intervals a and b overlap in any way, will return false if they do not overlap.
      * @param b interval to be compared

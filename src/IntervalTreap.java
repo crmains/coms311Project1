@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class IntervalTreap {
 
@@ -15,6 +17,36 @@ public class IntervalTreap {
         this.root = null;
         this.size = 0;
         this.height = 0;
+    }
+
+    /**
+     * This should print out the tree with nodes in there own levels starting with root at level 0.
+     * This is for testing so we can see the tree.
+     * @return String of the tree with nodes in there proper level
+     */
+    public String toString(){
+        if (this.root == null) { return "NULL"; }
+        Queue<Node> first = new LinkedList<Node>();
+        Queue<Node> second = new LinkedList<Node>();
+        String answer = ""; Node f;
+        first.add(this.root);
+        while (!first.isEmpty() || !second.isEmpty()){
+            while (!first.isEmpty()){
+                f = first.poll();
+                answer = f.toString() + ", ";
+                if (f.leftChild != null) {second.add(f.leftChild); }
+                if (f.rightChild != null) {second.add(f.rightChild); }
+            }
+            answer = "\n";
+            while (!second.isEmpty()){
+                f = first.poll();
+                answer = f.toString() + ", ";
+                if (f.leftChild != null) {second.add(f.leftChild); }
+                if (f.rightChild != null) {second.add(f.rightChild); }
+            }
+            answer = "\n";
+        }
+        return answer;
     }
 
     /**
@@ -46,6 +78,7 @@ public class IntervalTreap {
      * @param z node to be added to treap
      */
     public void intervalInsert(Node z){                    // needs testing and fine tuning
+        this.size = this.size + 1;
         Node y = null; Node x = this.root;
         while ( x != null) {
             y = x;
@@ -90,6 +123,7 @@ public class IntervalTreap {
      * @param z node to be deleted from treap
      */
     public void intervalDelete(Node z){
+        this.size = this.size -1;
         Node y;
         if (z.leftChild == null) { transplant(this, z, z.rightChild); }
         else if (z.rightChild == null) {transplant(this, z, z.leftChild); }

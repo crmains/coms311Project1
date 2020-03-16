@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Node {
 
     Interval i;
@@ -15,12 +17,16 @@ public class Node {
      * @param i Interval of this new node
      */
     public Node(Interval i){
+        Random dice = new Random();
         this.i = i;
         this.iMax = 0;
-        this.priority = 0;
+        this.priority = 1 + dice.nextInt(Integer.MAX_VALUE - 1);
         this.parent = null;
         this.leftChild = null;
         this.rightChild = null;
+    }
+    public String toString(){
+        return "[" + this.i.toString() + ", " + this.iMax + ", " + this.priority + "]";
     }
     /**
      * Returns the parent of this node.
