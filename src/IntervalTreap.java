@@ -45,7 +45,7 @@ public class IntervalTreap {
      * adds node z, whose interv attribute references an Interval object, to the interval treap.
      * @param z node to be added to treap
      */
-    public void intervalInsert(Node z){                    // needs work still not done
+    public void intervalInsert(Node z){                    // needs testing and fine tuning
         Node y = null; Node x = this.root;
         while ( x != null) {
             y = x;
@@ -82,15 +82,48 @@ public class IntervalTreap {
                     x.leftChild = z; z.parent = x;
                 }
             }
-        }// end right left shift
+        }// end right left rotate
     }
 
     /**
      * removes node z from the interval treap.
      * @param z node to be deleted from treap
      */
-    public void intervalDelete(Node z){       //  needs work still not done
+    public void intervalDelete(Node z){
+        Node y;
+        if (z.leftChild == null) { transplant(this, z, z.rightChild); }
+        else if (z.rightChild == null) {transplant(this, z, z.leftChild); }
+        else {
+            y = z.rightChild;
+            while (y.leftChild != null) {
+                y = y.leftChild;
+            }
+            if (y.parent != z) {
+                transplant(this, y, y.rightChild);
+                y.rightChild = z.rightChild;
+                y.rightChild.parent = y;
+            }
+            transplant(this, z, y);
+            y.leftChild = z.leftChild;
+            y.leftChild.parent = y;
+        }
+    }
 
+    /**
+     * transplant replaces the subtree rooted at node u with the subtree rooted at node v.
+     * @param T Tree that the transplant is taking place
+     * @param u Node to be replaced
+     * @param v Node to place in u's place
+     */
+    public void transplant(IntervalTreap T, Node u, Node v){
+        if (u.parent == null) {
+            T.root = v;
+        }
+        else if (u == u.parent.leftChild){
+            u.parent.leftChild = v;
+        }
+        else{ u.parent.rightChild = v; }
+        if (v != null) { v.parent = u.parent; }
     }
 
     /**
@@ -98,7 +131,7 @@ public class IntervalTreap {
      * @param i interval looking for overlap
      * @return node containing interval that overlaps i
      */
-    public Node intervalSearch(Interval i){  // should be done
+    public Node intervalSearch(Interval i){
         Node x = this.root;
         while (x != null && x.getInterv().intervalOverlap(i) ){
             if ( x.leftChild != null && x.leftChild.iMax >= i.low ) { x = x.leftChild; }
