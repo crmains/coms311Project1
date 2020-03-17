@@ -1,3 +1,8 @@
+/**
+ * Project 1 Team Members
+ *  Christian Mains
+ *   Sam Jungman
+ */
 public class Interval {
 
     int high;

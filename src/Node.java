@@ -1,13 +1,19 @@
 import java.util.Random;
 
+/**
+ * Project 1 Team Members
+ *  Christian Mains
+ *   Sam Jungman
+ */
 public class Node {
 
-    Interval i;
-    int iMax;
-    int priority;
-    Node parent;
-    Node leftChild;
-    Node rightChild;
+    public Interval i;
+    public int iMax;
+    public int priority;
+    public int height;
+    public Node parent;
+    public Node leftChild;
+    public Node rightChild;
 
     /**
      * Node contains "Node parent" parent of this node, "Interval i" the key of this node,
@@ -19,8 +25,9 @@ public class Node {
     public Node(Interval i){
         Random dice = new Random();
         this.i = i;
-        this.iMax = 0;
+        this.iMax = i.high;
         this.priority = 1 + dice.nextInt(Integer.MAX_VALUE - 1);
+        this.height = 0;
         this.parent = null;
         this.leftChild = null;
         this.rightChild = null;
@@ -28,6 +35,20 @@ public class Node {
     public String toString(){
         return "[" + this.i.toString() + ", " + this.iMax + ", " + this.priority + "]";
     }
+    public void setimax(){
+        this.iMax = this.i.high;
+        if (this.leftChild != null) { this.iMax = max(this.leftChild.iMax, this.iMax); }
+        if (this.rightChild != null){ this.iMax = max(this.rightChild.iMax, this.iMax); }
+    }
+    public int max(int a, int b) {
+        if (a > b) {return a; }
+        else {return b; }
+    }
+    public void setheight(){
+        if (this.parent == null){this.height = 0; }
+        else { this.height = this.parent.height + 1; }
+    }
+    public int getheight(){ return this.height; }
     /**
      * Returns the parent of this node.
      * @return Parent of Node
