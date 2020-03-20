@@ -10,7 +10,7 @@ public class Node {
     public Interval i;
     public int iMax;
     public int priority;
-    public int height;
+    private int height;
     public Node parent;
     public Node leftChild;
     public Node rightChild;
@@ -42,16 +42,12 @@ public class Node {
     }
 
     /**
-     * Re-evaluates the iMax starting at this node and goes to root evaluating iMax.
+     * Re-evaluates the iMax at this node.
      */
     public void setimax(){
-        Node next = this;
-        while(next != null){
-            next.iMax = next.i.high;
-            if (next.leftChild != null) { next.iMax = max(next.leftChild.iMax, next.iMax); }
-            if (next.rightChild != null){ next.iMax = max(next.rightChild.iMax, next.iMax); }
-            next = next.parent;
-        }
+        this.iMax = this.i.high;
+        if (this.leftChild != null) { this.iMax = max(this.leftChild.iMax, this.iMax); }
+        if (this.rightChild != null){ this.iMax = max(this.rightChild.iMax, this.iMax); }
     }
 
     /**
@@ -66,12 +62,10 @@ public class Node {
     }
 
     /**
-     * Sets the height of the node.
+     *  Sets the height of this ndoe to h.
+     * @param h height of this node
      */
-    public void setheight(){
-        if (this.parent == null){this.height = 0; }
-        else { this.height = this.parent.height + 1; }
-    }
+    public void setHeight(int h){ this.height = h; }
 
     /**
      * Returns the height of this node.
