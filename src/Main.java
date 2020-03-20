@@ -16,6 +16,6 @@ public class Main {
         A.intervalInsert(a);
         A.intervalInsert(b);
         A.intervalInsert(c);
-        System.out.println(A.toString());
+        System.out.println(A.tostring());
     }
 }

@@ -43,6 +43,7 @@ public class Interval {
     public String tostring(){
         return "[" + this.low + "," + this.high + "]";
     }
+
     /**
      * Returns true of intervals a and b overlap in any way, will return false if they do not overlap.
      * @param b interval to be compared

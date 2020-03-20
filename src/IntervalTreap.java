@@ -38,18 +38,18 @@ public class IntervalTreap {
         while (!first.isEmpty() || !second.isEmpty()){
             while (!first.isEmpty()){
                 f = first.poll();
-                answer = answer + f.toString() + ", ";
+                answer += f.tostring() + ", ";
                 if (f.leftChild != null) {second.add(f.leftChild); }
                 if (f.rightChild != null) {second.add(f.rightChild); }
             }
-            answer = "\n";
+            answer += "\n";
             while (!second.isEmpty()){
                 f = second.poll();
-                answer = answer + f.toString() + ", ";
+                answer += f.tostring() + ", ";
                 if (f.leftChild != null) {first.add(f.leftChild); }
                 if (f.rightChild != null) {first.add(f.rightChild); }
             }
-            answer = "\n";
+            answer += "\n";
         }
         return answer;
     }
@@ -103,19 +103,22 @@ public class IntervalTreap {
             if (y.rightChild == z) {leftUpRotate(y, z);}
             y = z.parent;
         }
-        if(y != null){h = y.getheight() + 1;}
-        this.height = max(reorder_height(z, h), this.height);//reorder height at and under z
+        if(y != null){h = y.getheight() + 1;} //reorder height at and under z
+        h = reorder_height(z, h);
+        if(h > this.height){ this.height = h;}
     }
     private void rightUpRotate(Node y, Node z){
         if (z.rightChild != null) {
             y.leftChild = z.rightChild;
             y.leftChild.parent = y;
         }
+        else{y.leftChild = null;}
         z.parent = y.parent;
         z.rightChild = y;                 // "collecting data" i dont know whats wrong hear
         y.parent = z;
         y.setimax(); z.setimax();
-        if (z.parent != null) {
+        if(z.parent == null){this.root = z;}
+        else{
             if (z.parent.leftChild == y) { z.parent.leftChild = z; }
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
             z.parent.setimax();
@@ -126,11 +129,13 @@ public class IntervalTreap {
             y.rightChild = z.leftChild;
             y.rightChild.parent = y;
         }
+        else{y.rightChild = null;}
         z.parent = y.parent;
         z.leftChild = y;                // "collecting data" i dont know whats wrong hear
         y.parent = z;
         y.setimax(); z.setimax();
-        if (z.parent != null) {
+        if(z.parent == null){this.root = z;}
+        else{
             if (z.parent.leftChild == y) { z.parent.leftChild = z; }
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
             z.parent.setimax();
@@ -145,22 +150,16 @@ public class IntervalTreap {
      * @return The height of this subtree rooted at x.
      */
     private int reorder_height(Node x, int maxheight) {
-        x.setHeight(maxheight);
-        if(x.leftChild != null){maxheight = max(reorder_height(x.leftChild, maxheight +1), maxheight);}
-        if(x.rightChild != null){maxheight = max(reorder_height(x.rightChild, maxheight +1), maxheight);}
+        x.setHeight(maxheight); int l = 0, r = 0;
+        if(x.leftChild != null){ l = reorder_height(x.leftChild, maxheight +1);}
+        if(x.rightChild != null){ r = reorder_height(x.rightChild, maxheight +1);}
+        if(l != 0 || r != 0){
+            if(l > r){return l;}
+            else{return r;}
+        }
         return maxheight;
     }
 
-    /**
-     * Helper method, returns greater of two integers.
-     * @param a integer
-     * @param b integer
-     * @return greater of two integers
-     */
-    private int max(int a, int b){
-        if(a > b){return a;}
-        else{ return b;}
-    }
     /**
      * removes node z from the interval treap.
      * @param z node to be deleted from treap

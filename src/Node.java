@@ -38,7 +38,7 @@ public class Node {
      * @return String
      */
     public String tostring(){
-        return "[" + this.i.toString() + ", " + this.iMax + ", " + this.priority + "]";
+        return "[" + this.i.tostring() + ", " + this.iMax + ", " + this.priority + "]";
     }
 
     /**
