@@ -29,7 +29,7 @@ public class IntervalTreap {
      * This is for testing so we can see the tree.
      * @return String of the tree with nodes in there proper level
      */
-    public String toString(){
+    public String tostring(){
         if (this.root == null) { return "NULL"; }
         Queue<Node> first = new LinkedList<Node>();
         Queue<Node> second = new LinkedList<Node>();
@@ -94,8 +94,10 @@ public class IntervalTreap {
         z.parent = y;
         if (y == null) {this.root = z; }
         else if (z.i.low < y.i.low) {y.leftChild = z; }
-        else {y.rightChild = z; }                              // end of insertion
-        y.setimax();
+        else {
+            y.rightChild = z;
+            y.setimax();
+        }                                                    // end of insertion
         while (y != null && y.priority > z.priority) {         //Start Rotation
             if (y.leftChild == z) {rightUpRotate(y, z);}
             if (y.rightChild == z) {leftUpRotate(y, z);}
@@ -143,9 +145,9 @@ public class IntervalTreap {
      * @return The height of this subtree rooted at x.
      */
     private int reorder_height(Node x, int maxheight) {
-        if(x == null){return 0;}
         x.setHeight(maxheight);
-        maxheight = max(reorder_height(x.leftChild, maxheight +1), reorder_height(x.rightChild, maxheight +1));
+        if(x.leftChild != null){maxheight = max(reorder_height(x.leftChild, maxheight +1), maxheight);}
+        if(x.rightChild != null){maxheight = max(reorder_height(x.rightChild, maxheight +1), maxheight);}
         return maxheight;
     }
 

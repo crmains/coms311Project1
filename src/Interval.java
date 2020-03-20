@@ -40,7 +40,7 @@ public class Interval {
      * String representaion of this interval.
      * @return String
      */
-    public String toString(){
+    public String tostring(){
         return "[" + this.low + "," + this.high + "]";
     }
     /**

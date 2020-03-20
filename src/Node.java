@@ -37,7 +37,7 @@ public class Node {
      * Returns string representation of this node.
      * @return String
      */
-    public String toString(){
+    public String tostring(){
         return "[" + this.i.toString() + ", " + this.iMax + ", " + this.priority + "]";
     }
 
