@@ -36,6 +36,10 @@ public class Interval {
      */
     public int getHigh(){ return this.high; }
 
+    /**
+     * String representaion of this interval.
+     * @return String
+     */
     public String toString(){
         return "[" + this.low + "," + this.high + "]";
     }

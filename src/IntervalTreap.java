@@ -95,6 +95,7 @@ public class IntervalTreap {
         if (y == null) {this.root = z; }
         else if (z.i.low < y.i.low) {y.leftChild = z; }
         else {y.rightChild = z; }                              // end of insertion
+        z.setimax(); z.setheight();
         while (y != null && y.priority > z.priority) {         //Start Rotation
             if (y.leftChild == z) {rightUpRotate(y, z);}
             if (y.rightChild == z) {leftUpRotate(y, z);}
@@ -107,7 +108,7 @@ public class IntervalTreap {
             y.leftChild.parent = y;
         }
         z.parent = y.parent;
-        z.rightChild = y;                         // "collecting data" i dont know whats wrong hear
+        z.rightChild = y;                 // "collecting data" i dont know whats wrong hear
         y.parent = z;
         if (z.parent != null) {
             if (z.parent.leftChild == y) { z.parent.leftChild = z; }
@@ -120,7 +121,7 @@ public class IntervalTreap {
             y.rightChild.parent = y;
         }
         z.parent = y.parent;
-        z.leftChild = y;                                // "collecting data" i dont know whats wrong hear
+        z.leftChild = y;                // "collecting data" i dont know whats wrong hear
         y.parent = z;
         if (z.parent != null) {
             if (z.parent.leftChild == y) { z.parent.leftChild = z; }

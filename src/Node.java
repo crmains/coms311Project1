@@ -32,22 +32,51 @@ public class Node {
         this.leftChild = null;
         this.rightChild = null;
     }
+
+    /**
+     * Returns string representation of this node.
+     * @return String
+     */
     public String toString(){
         return "[" + this.i.toString() + ", " + this.iMax + ", " + this.priority + "]";
     }
+
+    /**
+     * Re-evaluates the iMax starting at this node and goes to root evaluating iMax.
+     */
     public void setimax(){
-        this.iMax = this.i.high;
-        if (this.leftChild != null) { this.iMax = max(this.leftChild.iMax, this.iMax); }
-        if (this.rightChild != null){ this.iMax = max(this.rightChild.iMax, this.iMax); }
+        Node next = this;
+        while(next != null){
+            next.iMax = next.i.high;
+            if (next.leftChild != null) { next.iMax = max(next.leftChild.iMax, next.iMax); }
+            if (next.rightChild != null){ next.iMax = max(next.rightChild.iMax, next.iMax); }
+            next = next.parent;
+        }
     }
+
+    /**
+     *  Returns the greater of the two integers.
+     * @param a integer
+     * @param b integer
+     * @return the greater of the two integer
+     */
     public int max(int a, int b) {
         if (a > b) {return a; }
         else {return b; }
     }
+
+    /**
+     * Sets the height of the node.
+     */
     public void setheight(){
         if (this.parent == null){this.height = 0; }
         else { this.height = this.parent.height + 1; }
     }
+
+    /**
+     * Returns the height of this node.
+     * @return height
+     */
     public int getheight(){ return this.height; }
     /**
      * Returns the parent of this node.
