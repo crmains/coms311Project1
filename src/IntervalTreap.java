@@ -201,7 +201,7 @@ public class IntervalTreap {
      */
     public Node intervalSearch(Interval i){  //needs tested
         Node x = this.root;
-        while (x != null && x.getInterv().intervalOverlap(i) ){
+        while (x != null && !x.getInterv().intervalOverlap(i) ){
             if ( x.leftChild != null && x.leftChild.iMax >= i.low ) { x = x.leftChild; }
             else { x = x.rightChild; }
         }

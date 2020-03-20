@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         //IntervalTreap A = generate_three_node_tree();
         IntervalTreap A = generate_tree_example();
-
+        System.out.println(testing_intervalsearch(A, 31, 32));
         System.out.println(A.tostring());
     }
 
@@ -41,5 +41,11 @@ public class Main {
             l = l +2;
         }
         return A;
+    }
+    public static String testing_intervalsearch(IntervalTreap A, int l, int h){
+        Interval in = new Interval(l, h);
+        Node an = A.intervalSearch(in);
+        if(an == null){return "this interval returns Node NULL \n";}
+        return "This interval returns Node :" + an.tostring() + "\n";
     }
 }
