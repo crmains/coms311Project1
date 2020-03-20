@@ -57,4 +57,17 @@ public class Interval {
         if ( (al >= bl && ah <= bh) || (al <= bl && ah >= bh) ) { return true; }
         return false;
     }
+
+    /**
+     * Returns true of this interval equals i interval or false otherwise.
+     * return true if this.low == i.low and this.high == i.high.
+     * @param i Interval to be compared to this interval
+     * @return boolean true if this interval is equal to i interval
+     */
+    public boolean intervalEquals(Interval i){
+        if(this.low == i.low && this.high == i.high){
+            return true;
+        }
+        return false;
+    }
 }
