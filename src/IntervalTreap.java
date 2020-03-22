@@ -82,7 +82,7 @@ public class IntervalTreap {
      * adds node z, whose interv attribute references an Interval object, to the interval treap.
      * @param z node to be added to treap
      */
-    public void intervalInsert(Node z){                    // needs testing and fine tuning
+    public void intervalInsert(Node z){
         this.size += 1; int h = 0;
         Node y = null;
         Node x = this.root;
@@ -103,38 +103,50 @@ public class IntervalTreap {
             if (y.rightChild == z) {leftUpRotate(y, z);}
             y = z.parent;
         }
-        if(y != null){h = y.getheight() + 1;} //reorder height at and under z
+        if(y != null){h = y.getheight() + 1;}         //reorder height of nodes at and under z
         h = reorder_height(z, h);
         if(h > this.height){ this.height = h;}
     }
+
+    /**
+     * Helper method to intervalInsert. will rotate z up to the right and y down.
+     * @param y node to rotate down to the right
+     * @param z node to rotate up to the right
+     */
     private void rightUpRotate(Node y, Node z){
-        if (z.rightChild != null) {
+        if (z.rightChild != null) {               //if z has a right child
             y.leftChild = z.rightChild;
             y.leftChild.parent = y;
         }
         else{y.leftChild = null;}
-        z.parent = y.parent;
-        z.rightChild = y;                 // "collecting data" i dont know whats wrong here
+        z.parent = y.parent;              // rotate z up and y down
+        z.rightChild = y;
         y.parent = z;
         y.setimax(); z.setimax();
-        if(z.parent == null){this.root = z;}
+        if(z.parent == null){this.root = z;}           // if y has a parent or is root
         else{
             if (z.parent.leftChild == y) { z.parent.leftChild = z; }
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
             z.parent.setimax();
         }
     }
+
+    /**
+     * Helper method to intervalInsert. will rotate z up to the left and y down.
+     * @param y node to rotate down to the left
+     * @param z node to rotate up to the left
+     */
     private void leftUpRotate(Node y, Node z){
-        if (z.leftChild != null) {
+        if (z.leftChild != null) {               //if z has a left child
             y.rightChild = z.leftChild;
             y.rightChild.parent = y;
         }
         else{y.rightChild = null;}
-        z.parent = y.parent;
-        z.leftChild = y;                // "collecting data" i dont know whats wrong here
+        z.parent = y.parent;                   // rotate z up and y down
+        z.leftChild = y;
         y.parent = z;
         y.setimax(); z.setimax();
-        if(z.parent == null){this.root = z;}
+        if(z.parent == null){this.root = z;}      // if y has a parent or is root
         else{
             if (z.parent.leftChild == y) { z.parent.leftChild = z; }
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
@@ -233,16 +245,15 @@ public class IntervalTreap {
     		//Remove u and return
     		u = null;
     		return;
-    		
     	}
-    }
+     }
 
     /**
      * returns a reference to a node x in the interval treap such that x.interv overlaps interval i, or null if no such element is on the treap.
      * @param i interval looking for overlap
      * @return node containing interval that overlaps i
      */
-    public Node intervalSearch(Interval i){  //needs tested
+    public Node intervalSearch(Interval i){
         Node x = this.root;
         while (x != null && !x.getInterv().intervalOverlap(i) ){
             if ( x.leftChild != null && x.leftChild.iMax >= i.low ) { x = x.leftChild; }
@@ -257,7 +268,11 @@ public class IntervalTreap {
      * @return the node containing interval you are looking for
      */
     public Node intervalSearchExactly(Interval i){  //extra credit
-        Node x = null;
+        Node x = this.root;
+        while(x != null && !x.i.intervalEquals(i) ){
+            if ( x.leftChild != null && i.low < x.i.low ) { x = x.leftChild; }
+            else { x = x.rightChild; }
+        }
         return x;
     }
 
@@ -268,6 +283,23 @@ public class IntervalTreap {
      */
     public List<Interval> overlappingIntervals(Interval i){   //extra credit
         List<Interval> x = new ArrayList<Interval>();
+        Node n = this.root;
+        x = overlappingRecycle(n, i, x);
+        return x;
+    }
+
+    /**
+     * Helper method for overlappingIntervals Recursively calls each node and if interval overlaps i adds
+     * interval to list.
+     * @param n current node being looked at
+     * @param i Interval of interest
+     * @param x list of overlapping intervals
+     * @return
+     */
+    private List<Interval> overlappingRecycle(Node n, Interval i, List<Interval> x){
+        if(n.i.intervalOverlap(i)) {x.add(n.i); }
+        if(n.leftChild != null) { overlappingRecycle(n.leftChild, i, x); }
+        if(n.rightChild != null) { overlappingRecycle(n.rightChild, i, x); }
         return x;
     }
 }
