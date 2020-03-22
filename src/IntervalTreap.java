@@ -114,7 +114,7 @@ public class IntervalTreap {
         }
         else{y.leftChild = null;}
         z.parent = y.parent;
-        z.rightChild = y;                 // "collecting data" i dont know whats wrong hear
+        z.rightChild = y;                 // "collecting data" i dont know whats wrong here
         y.parent = z;
         y.setimax(); z.setimax();
         if(z.parent == null){this.root = z;}
@@ -131,7 +131,7 @@ public class IntervalTreap {
         }
         else{y.rightChild = null;}
         z.parent = y.parent;
-        z.leftChild = y;                // "collecting data" i dont know whats wrong hear
+        z.leftChild = y;                // "collecting data" i dont know whats wrong here
         y.parent = z;
         y.setimax(); z.setimax();
         if(z.parent == null){this.root = z;}
@@ -167,22 +167,20 @@ public class IntervalTreap {
     public void intervalDelete(Node z){  // not done needs work
         this.size -= 1;
         Node y;
-        if (z.leftChild == null) { transplant(z, z.rightChild); }
-        else if (z.rightChild == null) {transplant(z, z.leftChild); }
-        else {
+        //PHASE 1
+        if (z.leftChild == null) { transplant(z, z.rightChild); } //P1 Case 1
+        else if (z.rightChild == null) {transplant(z, z.leftChild); } //P1 Case 2
+        else { //P1 Case 3
             y = z.rightChild;
             while (y.leftChild != null) {
                 y = y.leftChild;
             }
-            if (y.parent != z) {
-                transplant(y, y.rightChild);
-                y.rightChild = z.rightChild;
-                y.rightChild.parent = y;
-            }
             transplant(z, y);
-            y.leftChild = z.leftChild;
-            y.leftChild.parent = y;
         }
+        
+        //PHASE 2
+        
+        
     }
 
     /**
@@ -190,8 +188,53 @@ public class IntervalTreap {
      * @param u Node to be replaced
      * @param v Node to place in u's place
      */
-    public void transplant(Node u, Node v){
-
+    public void transplant(Node u, Node v)
+    {
+    	if(v == null) //NULL CASE
+    	{
+    		if(u.parent.leftChild.equals(u))
+    			u.parent.leftChild = null;
+    		if(u.parent.rightChild.equals(u))
+    			u.parent.rightChild = null;
+    	}
+    	else
+    	{
+    		//Set u's parent's children = v
+    		if(u != root)
+    		{
+    			if(u.parent.leftChild.equals(u))
+    				u.parent.leftChild = v;
+    			if(u.parent.rightChild.equals(u))
+    				u.parent.rightChild = v;
+    		}
+    		
+    		//Set v's parent's children = v's right child or null
+    		//NOTE: It is impossible for V to have a left child
+    		if(v.rightChild == null)
+    		{
+    			if(v.parent.leftChild.equals(v))
+    				u.parent.leftChild = null;
+    			if(v.parent.rightChild.equals(v))
+    				u.parent.rightChild = null;
+    		}
+    		else
+    		{
+    			if(v.parent.leftChild.equals(v))
+    				u.parent.leftChild = v.rightChild;
+    			if(v.parent.rightChild.equals(v))
+    				u.parent.rightChild = v.rightChild;
+    		}
+    		
+    		//Set v's children to u's children
+    		v.leftChild = u.leftChild;
+    		v.rightChild = u.rightChild;
+    		
+    		
+    		//Remove u and return
+    		u = null;
+    		return;
+    		
+    	}
     }
 
     /**
