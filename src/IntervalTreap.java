@@ -176,7 +176,7 @@ public class IntervalTreap {
      * removes node z from the interval treap.
      * @param z node to be deleted from treap
      */
-    public void intervalDelete(Node z){  // not done needs work
+    public void intervalDelete(Node z){  // Done but needs testing
         this.size -= 1;
         Node y;
         //PHASE 1
@@ -191,8 +191,50 @@ public class IntervalTreap {
         }
         
         //PHASE 2
+        Node reorder = z;
+        while(!checkPriority(reorder))
+        {
+        	if(reorder.leftChild == null)
+        	{
+        		leftUpRotate(reorder, reorder.rightChild);
+        		reorder = reorder.rightChild;
+        	}
+        	else if(reorder.rightChild == null)
+        	{
+        		rightUpRotate(reorder, reorder.leftChild);
+        		reorder = reorder.leftChild;
+        	}
+        	else
+        	{
+        		if(reorder.leftChild.getPriority() < reorder.rightChild.getPriority())
+        		{
+        			rightUpRotate(reorder, reorder.leftChild);
+        			reorder = reorder.leftChild;
+        		}
+        		else 
+        		{
+        			leftUpRotate(reorder, reorder.rightChild);
+        			reorder = reorder.rightChild;
+        		}
+        	}
+        }
         
-        
+    }
+    
+    /**
+     * Helper method for delete. Checks that the nodes beneath z have nondecreasing priority
+     * @param z
+     * @return boolean
+     */
+    private boolean checkPriority(Node z)
+    {
+    	if(z.leftChild == null && z.rightChild == null)
+    		return true;
+    	if(z.leftChild == null)
+    		return (z.getPriority() <= z.rightChild.getPriority());
+    	if(z.rightChild == null)
+    		return (z.getPriority() <= z.leftChild.getPriority());
+    	return (z.getPriority() <= z.leftChild.getPriority() && z.getPriority() <= z.rightChild.getPriority());
     }
 
     /**
