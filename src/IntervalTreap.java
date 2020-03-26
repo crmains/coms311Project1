@@ -176,7 +176,7 @@ public class IntervalTreap {
      * removes node z from the interval treap.
      * @param z node to be deleted from treap
      */
-    public void intervalDelete(Node z) {                 // not done needs work
+    public void intervalDelete(Node z) {         // not done needs work
 
     }
 
