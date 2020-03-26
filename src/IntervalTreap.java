@@ -176,9 +176,119 @@ public class IntervalTreap {
      * removes node z from the interval treap.
      * @param z node to be deleted from treap
      */
-    public void intervalDelete(Node z) {         // not done needs work
-
+    public void intervalDelete(Node z){  // Done but needs testing
+        this.size -= 1;
+        Node y;
+        //PHASE 1
+        if (z.leftChild == null) { transplant(z, z.rightChild); } //P1 Case 1
+        else if (z.rightChild == null) {transplant(z, z.leftChild); } //P1 Case 2
+        else { //P1 Case 3
+            y = z.rightChild;
+            while (y.leftChild != null) {
+                y = y.leftChild;
+            }
+            transplant(z, y);
+        }
+        
+        //PHASE 2
+        Node reorder = z;
+        while(!checkPriority(reorder))
+        {
+        	if(reorder.leftChild == null)
+        	{
+        		leftUpRotate(reorder, reorder.rightChild);
+        		reorder = reorder.rightChild;
+        	}
+        	else if(reorder.rightChild == null)
+        	{
+        		rightUpRotate(reorder, reorder.leftChild);
+        		reorder = reorder.leftChild;
+        	}
+        	else
+        	{
+        		if(reorder.leftChild.getPriority() < reorder.rightChild.getPriority())
+        		{
+        			rightUpRotate(reorder, reorder.leftChild);
+        			reorder = reorder.leftChild;
+        		}
+        		else 
+        		{
+        			leftUpRotate(reorder, reorder.rightChild);
+        			reorder = reorder.rightChild;
+        		}
+        	}
+        }
+        
     }
+    
+    /**
+     * Helper method for delete. Checks that the nodes beneath z have nondecreasing priority
+     * @param z
+     * @return boolean
+     */
+    private boolean checkPriority(Node z)
+    {
+    	if(z.leftChild == null && z.rightChild == null)
+    		return true;
+    	if(z.leftChild == null)
+    		return (z.getPriority() <= z.rightChild.getPriority());
+    	if(z.rightChild == null)
+    		return (z.getPriority() <= z.leftChild.getPriority());
+    	return (z.getPriority() <= z.leftChild.getPriority() && z.getPriority() <= z.rightChild.getPriority());
+    }
+
+    /**
+     * transplant replaces the subtree rooted at node u with the subtree rooted at node v.
+     * @param u Node to be replaced
+     * @param v Node to place in u's place
+     */
+    public void transplant(Node u, Node v)
+    {
+    	if(v == null) //NULL CASE
+    	{
+    		if(u.parent.leftChild.equals(u))
+    			u.parent.leftChild = null;
+    		if(u.parent.rightChild.equals(u))
+    			u.parent.rightChild = null;
+    	}
+    	else
+    	{
+    		//Set u's parent's children = v
+    		if(u != root)
+    		{
+    			if(u.parent.leftChild.equals(u))
+    				u.parent.leftChild = v;
+    			if(u.parent.rightChild.equals(u))
+    				u.parent.rightChild = v;
+    		}
+    		
+    		//Set v's parent's children = v's right child or null
+    		//NOTE: It is impossible for V to have a left child
+    		if(v.rightChild == null)
+    		{
+    			if(v.parent.leftChild.equals(v))
+    				u.parent.leftChild = null;
+    			if(v.parent.rightChild.equals(v))
+    				u.parent.rightChild = null;
+    		}
+    		else
+    		{
+    			if(v.parent.leftChild.equals(v))
+    				u.parent.leftChild = v.rightChild;
+    			if(v.parent.rightChild.equals(v))
+    				u.parent.rightChild = v.rightChild;
+    		}
+    		
+    		//Set v's children to u's children
+    		v.leftChild = u.leftChild;
+    		v.rightChild = u.rightChild;
+    		
+    		
+    		//Remove u and return
+    		u = null;
+    		return;
+    	}
+     }
 
     /**
      * returns a reference to a node x in the interval treap such that x.interv overlaps interval i, or null if no such element is on the treap.
@@ -225,7 +335,7 @@ public class IntervalTreap {
      * interval to list.
      * @param n current node being looked at
      * @param i Interval of interest
-     * @param x list of overlaping intervals
+     * @param x list of overlapping intervals
      * @return
      */
     private List<Interval> overlappingRecycle(Node n, Interval i, List<Interval> x){
