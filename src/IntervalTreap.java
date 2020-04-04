@@ -246,9 +246,9 @@ public class IntervalTreap {
     {
     	if(v == null) //NULL CASE
     	{
-    		if(u.parent.leftChild.equals(u))
+    		if(u.parent.leftChild == u)
     			u.parent.leftChild = null;
-    		if(u.parent.rightChild.equals(u))
+    		if(u.parent.rightChild == u)
     			u.parent.rightChild = null;
     	}
     	else
@@ -256,32 +256,36 @@ public class IntervalTreap {
     		//Set u's parent's children = v
     		if(u != root)
     		{
-    			if(u.parent.leftChild.equals(u))
+    			if(u.parent.leftChild == u)
     				u.parent.leftChild = v;
-    			if(u.parent.rightChild.equals(u))
+    			if(u.parent.rightChild == u)
     				u.parent.rightChild = v;
+    		}
+    		else
+    		{
+    			this.root = v;
     		}
     		
     		//Set v's parent's children = v's right child or null
     		//NOTE: It is impossible for V to have a left child
-    		if(v.rightChild == null)
-    		{
-    			if(v.parent.leftChild.equals(v))
-    				u.parent.leftChild = null;
-    			if(v.parent.rightChild.equals(v))
-    				u.parent.rightChild = null;
-    		}
-    		else
-    		{
-    			if(v.parent.leftChild.equals(v))
-    				u.parent.leftChild = v.rightChild;
-    			if(v.parent.rightChild.equals(v))
-    				u.parent.rightChild = v.rightChild;
-    		}
-    		
+    			if(v.rightChild == null)
+    			{
+    				if(v.parent.leftChild == v)
+    					v.parent.leftChild = null;
+    				if(v.parent.rightChild == v)
+    					v.parent.rightChild = null;
+    			}
+    			else
+    			{
+    				if(v.parent.leftChild == v)
+    					v.parent.leftChild = v.rightChild;
+    				if(v.parent.rightChild == v)
+    					v.parent.rightChild = v.rightChild;
+    			}
     		//Set v's children to u's children
     		v.leftChild = u.leftChild;
     		v.rightChild = u.rightChild;
+    		v.setHeight(u.getheight());
     		
     		
     		//Remove u and return
