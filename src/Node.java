@@ -62,10 +62,13 @@ public class Node {
     }
 
     /**
-     *  Sets the height of this ndoe to h.
-     * @param h height of this node
+     *  Sets the height of this node. takes the max height of its children and adds one to it to set height.
      */
-    public void setHeight(int h){ this.height = h; }
+    public void setHeight(){
+        this.height = 0;
+        if(this.leftChild != null) {this.height = this.leftChild.height + 1; }
+        if(this.rightChild != null) {this.height = max(this.rightChild.height + 1, this.height); }
+    }
 
     /**
      * Returns the height of this node.

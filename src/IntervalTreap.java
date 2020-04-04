@@ -93,19 +93,25 @@ public class IntervalTreap {
         }
         z.parent = y;
         if (y == null) {this.root = z; }
-        else if (z.i.low < y.i.low) {y.leftChild = z; }
+        else if (z.i.low < y.i.low) {
+            y.leftChild = z;
+            y.setimax(); y.setHeight();
+        }
         else {
             y.rightChild = z;
-            y.setimax();
-        }                                                    // end of insertion
+            y.setimax(); y.setHeight();
+        }
+                                                               // end of insertion
         while (y != null && y.priority > z.priority) {         //Start Rotation
             if (y.leftChild == z) {rightUpRotate(y, z);}
             if (y.rightChild == z) {leftUpRotate(y, z);}
             y = z.parent;
         }
-        if(y != null){h = y.getheight() + 1;}         //reorder height of nodes at and under z
-        h = reorder_height(z, h);
-        if(h > this.height){ this.height = h;}
+        while(z.parent != null){
+            z = z.parent;
+            z.setHeight();
+        }
+        this.height = this.root.getheight();             // set new height for tree
     }
 
     /**
@@ -129,6 +135,7 @@ public class IntervalTreap {
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
             z.parent.setimax();
         }
+        y.setHeight(); z.setHeight();
     }
 
     /**
@@ -152,24 +159,7 @@ public class IntervalTreap {
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
             z.parent.setimax();
         }
-    }
-
-    /**
-     * reorders height setting of x and all nodes under x. maxheight must be the current height of x or method
-     * will not work. only called by insert and delete.
-     * @param x Node
-     * @param maxheight current height of x
-     * @return The height of this subtree rooted at x.
-     */
-    private int reorder_height(Node x, int maxheight) {
-        x.setHeight(maxheight); int l = 0, r = 0;
-        if(x.leftChild != null){ l = reorder_height(x.leftChild, maxheight +1);}
-        if(x.rightChild != null){ r = reorder_height(x.rightChild, maxheight +1);}
-        if(l != 0 || r != 0){
-            if(l > r){return l;}
-            else{return r;}
-        }
-        return maxheight;
+        y.setHeight(); z.setHeight();
     }
 
     /**
@@ -189,7 +179,6 @@ public class IntervalTreap {
             }
             transplant(z, y);
         }
-        
         //PHASE 2
         Node reorder = z;
         while(!checkPriority(reorder))

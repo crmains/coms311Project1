@@ -16,7 +16,7 @@ public class Main {
         //System.out.println(testing_intervalSearchExactly(A, 7, 25));
         //System.out.println(testing_overlappingIntervals(A, 16, 21));
         System.out.print(A.tostring());
-        System.out.print(testing_intervalDelete(A, 15, 23));       //enter the interval you want to delete from the tree
+        //System.out.print(testing_intervalDelete(A, 17, 19));
         //System.out.println("The size of this TREE is: "+A.size);
         //System.out.println("The height of this TREE is: "+A.height);
     }
