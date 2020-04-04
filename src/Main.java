@@ -1,38 +1,35 @@
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
 /**
  * This main is for getto testing and such.
  * Project 1 Team Members
  * Christian Mains
  * Sam Jungman
  */
+
 public class Main {
 
     public static void main(String[] args) {
-        //IntervalTreap A = generate_three_node_tree();
-        IntervalTreap A = generate_tree_example();
+        IntervalTreap A = generate_random_tree(22);
+        //IntervalTreap A = generate_tree_example();
         //System.out.println(testing_intervalsearch(A, 31, 32));
         //System.out.println(testing_intervalSearchExactly(A, 7, 25));
         //System.out.println(testing_overlappingIntervals(A, 16, 21));
         System.out.print(A.tostring());
-        System.out.print(testing_intervalDelete(A, 16, 21));       //enter the interval you want to delete from the tree
+        //System.out.print(testing_intervalDelete(A, 16, 21));       //enter the interval you want to delete from the tree
         //System.out.println("The size of this TREE is: "+A.size);
-        System.out.println(" ");
-        //System.out.println("The height of this TREE is: "+A.height);
+        System.out.println("The height of this TREE is: "+A.height);
     }
-                               // generates treap with three nodes, nothing more
-    public static IntervalTreap generate_three_node_tree(){
-        Interval x = new Interval(1, 2);
-        Interval y = new Interval(2, 3);
-        Interval z = new Interval(3, 4);
-        Node a = new Node(y);
-        Node b = new Node(x);
-        Node c = new Node(z);
+                               // generates treap with N nodes
+    public static IntervalTreap generate_random_tree(int N){
+        Random dice = new Random(); int n = 0;
         IntervalTreap A = new IntervalTreap();
-        A.intervalInsert(a);
-        A.intervalInsert(b);
-        A.intervalInsert(c);
+        for(n = 0; n < N; n++){
+            Interval a = new Interval(dice.nextInt(Integer.MAX_VALUE-1), dice.nextInt(Integer.MAX_VALUE-1));
+            Node b = new Node(a);
+            A.intervalInsert(b);
+        }
         return A;
     }
                   // generates example treap from the project 1 description document
