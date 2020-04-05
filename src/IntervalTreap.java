@@ -180,17 +180,36 @@ public class IntervalTreap {
         if (z.leftChild == null) 
         {   //P1 Case 1
         	y = z.rightChild;
-            while (y.leftChild != null)
-            {
-                y = y.leftChild;
-            }
-        	transplant(z, y); 
+        	if(y == null)
+        	{
+        		transplant(z,y);
+        	}
+        	else
+        	{
+        		while (y.leftChild != null)
+            	{
+                	y = y.leftChild;
+            	}
+        		transplant(z, y); 
+        	}
         	y = z.rightChild;
         } 
         else if (z.rightChild == null) 
         {  //P1 Case 2
         	y = z.leftChild;
-        	transplant(z, z.leftChild);
+        	if(y == null)
+        	{
+        		transplant(z,y);
+        	}
+        	else
+        	{
+        		while (y.rightChild != null)
+            	{
+                	y = y.rightChild;
+            	}
+        		transplant(z, y); 
+        	}
+        	y = z.leftChild;
         } 
         else 
         { //P1 Case 3

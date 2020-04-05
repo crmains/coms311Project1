@@ -17,13 +17,13 @@ public class Main {
         //System.out.println(testing_intervalSearchExactly(A, 7, 25));
         //System.out.println(testing_overlappingIntervals(A, 16, 21));
         System.out.print(A.tostring());
-        System.out.print(testing_intervalDelete(A, 16, 21));       //enter the interval you want to delete from the tree
+        System.out.print(testing_intervalDelete(A, 16, 21));       
         System.out.print(testing_intervalDelete(A, 8, 9));
         System.out.print(testing_intervalDelete(A, 15, 23));
-        //System.out.print(testing_intervalDelete(A, 26, 26));
-        //System.out.print(testing_intervalDelete(A, 7, 25));    //   somthing is wrong hear node with interval 0, 3 is also deleted.
-        //System.out.print(testing_intervalDelete(A, 25, 30));
-        //System.out.println("The size of this TREE is: "+A.size);
+        System.out.print(testing_intervalDelete(A, 26, 26));
+        System.out.print(testing_intervalDelete(A, 7, 25));    
+        System.out.print(testing_intervalDelete(A, 25, 30));
+        System.out.println("The size of this TREE is: "+A.size);
         System.out.println("The height of this TREE is: "+A.getHeight());
     }
                                // generates treap with N nodes
