@@ -182,7 +182,12 @@ public class IntervalTreap {
         //PHASE 1
         if (z.leftChild == null) 
         {   //P1 Case 1
-        	transplant(z, z.rightChild); 
+        	y = z.rightChild;
+            while (y.leftChild != null)
+            {
+                y = y.leftChild;
+            }
+        	transplant(z, y); 
         	y = z.rightChild;
         } 
         else if (z.rightChild == null) 
@@ -205,28 +210,24 @@ public class IntervalTreap {
         	Node reorder = y;
         	while(!checkPriority(reorder))
         	{
-        		System.out.println(this.tostring());
+        		//System.out.println(this.tostring());
         		if(reorder.leftChild == null)
         		{
-        			leftUpRotate(reorder, reorder.rightChild);
-        			//reorder = reorder.rightChild;
+        			rightUpRotate(reorder, reorder.rightChild);
         		}
         		else if(reorder.rightChild == null)
         		{
-        			rightUpRotate(reorder, reorder.leftChild);
-        			//reorder = reorder.leftChild;
+        			leftUpRotate(reorder, reorder.leftChild);
         		}
         		else
         		{
         			if(reorder.leftChild.getPriority() < reorder.rightChild.getPriority())
         			{
         				rightUpRotate(reorder, reorder.leftChild);
-        				//reorder = reorder.leftChild;
         			}
         			else 
         			{
         				leftUpRotate(reorder, reorder.rightChild);
-        				//reorder = reorder.rightChild;
         			}
         		}
         	}
