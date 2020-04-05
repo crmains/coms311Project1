@@ -17,12 +17,17 @@ public class Main {
         //System.out.println(testing_intervalSearchExactly(A, 7, 25));
         //System.out.println(testing_overlappingIntervals(A, 16, 21));
         System.out.print(A.tostring());
-        System.out.print(testing_intervalDelete(A, 16, 21));       
         System.out.print(testing_intervalDelete(A, 8, 9));
         System.out.print(testing_intervalDelete(A, 15, 23));
-        System.out.print(testing_intervalDelete(A, 26, 26));
-        System.out.print(testing_intervalDelete(A, 7, 25));    
+        System.out.print(testing_intervalDelete(A, 16, 21));
+        System.out.print(testing_intervalDelete(A, 17, 19));
         System.out.print(testing_intervalDelete(A, 25, 30));
+        System.out.print(testing_intervalDelete(A, 26, 26));
+        System.out.print(testing_intervalDelete(A, 7, 25));
+        System.out.print(testing_intervalDelete(A, 5, 8));
+        System.out.print(testing_intervalDelete(A, 6, 10));
+        System.out.print(testing_intervalDelete(A, 19, 20));
+        System.out.print(testing_intervalDelete(A, 0, 3));
         System.out.println("The size of this TREE is: "+A.size);
         System.out.println("The height of this TREE is: "+A.getHeight());
     }

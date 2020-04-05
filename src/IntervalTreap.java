@@ -28,7 +28,7 @@ public class IntervalTreap {
      * @return String of the tree with nodes in there proper level
      */
     public String tostring(){
-        if (this.root == null) { return "NULL"; }
+        if (this.root == null) { return "[[ , ], , ]\n"; }
         Queue<Node> first = new LinkedList<Node>();
         Queue<Node> second = new LinkedList<Node>();
         String answer = ""; Node f;
@@ -73,6 +73,7 @@ public class IntervalTreap {
      * @return number of treap levels
      */
     public int getHeight(){
+        if(this.root == null){return 0; }
         return this.root.getheight();
     }
 
@@ -177,6 +178,10 @@ public class IntervalTreap {
         Node y;
         
         //PHASE 1
+        if(size == 0){
+            this.root = null;
+            return;
+        }
         if (z.leftChild == null) 
         {   //P1 Case 1
         	y = z.rightChild;
@@ -229,11 +234,11 @@ public class IntervalTreap {
         		//System.out.println(this.tostring());
         		if(reorder.leftChild == null)
         		{
-        			rightUpRotate(reorder, reorder.rightChild);
+        			leftUpRotate(reorder, reorder.rightChild);
         		}
         		else if(reorder.rightChild == null)
         		{
-        			leftUpRotate(reorder, reorder.leftChild);
+        			rightUpRotate(reorder, reorder.leftChild);
         		}
         		else
         		{
@@ -249,7 +254,7 @@ public class IntervalTreap {
         	}
         	root.setHeight();
         }
-        
+        reorder_Height(z.parent);
     }
     
     /**
@@ -312,12 +317,17 @@ public class IntervalTreap {
     					v.parent.leftChild = v.rightChild;
     				if(v.parent.rightChild == v)
     					v.parent.rightChild = v.rightChild;
+    				v.rightChild.parent = v.parent;
     			}
     		//Set v's children to u's children
-    		if(u.leftChild != v)
-    			v.leftChild = u.leftChild;
-    		if(u.rightChild != v)
-    			v.rightChild = u.rightChild;
+    		if(u.leftChild != v) {
+                v.leftChild = u.leftChild;
+                if(u.leftChild != null){u.leftChild.parent = v;}
+            }
+    		if(u.rightChild != v) {
+                v.rightChild = u.rightChild;
+                if(u.rightChild != null){u.rightChild.parent = v;}
+            }
     		v.parent = u.parent;
     		v.setHeight();
     		
