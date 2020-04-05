@@ -12,7 +12,6 @@ public class IntervalTreap {
 
     Node root;
     int size;
-    int height;
 
     /**
      * An interval treap that contains reference to root node, reference to size being number of nodes in this tree,
@@ -21,7 +20,6 @@ public class IntervalTreap {
     public IntervalTreap(){
         this.root = null;
         this.size = 0;
-        this.height = 0;
     }
 
     /**
@@ -75,7 +73,7 @@ public class IntervalTreap {
      * @return number of treap levels
      */
     public int getHeight(){
-        return this.height;
+        return this.root.getheight();
     }
 
     /**
@@ -164,11 +162,10 @@ public class IntervalTreap {
      * @param h Node
      */
     public void reorder_Height(Node h){
-        while(h != null){
+        while(h != null) {
             h.setHeight();
             h = h.parent;
         }
-        this.height = this.root.getheight();
     }
 
     /**

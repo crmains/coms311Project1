@@ -24,7 +24,7 @@ public class Main {
         //System.out.print(testing_intervalDelete(A, 7, 25));    //   somthing is wrong hear node with interval 0, 3 is also deleted.
         //System.out.print(testing_intervalDelete(A, 25, 30));
         //System.out.println("The size of this TREE is: "+A.size);
-        System.out.println("The height of this TREE is: "+A.height);
+        System.out.println("The height of this TREE is: "+A.getHeight());
     }
                                // generates treap with N nodes
     public static IntervalTreap generate_random_tree(int N){
