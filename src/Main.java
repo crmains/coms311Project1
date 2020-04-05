@@ -17,12 +17,12 @@ public class Main {
         //System.out.println(testing_intervalSearchExactly(A, 7, 25));
         //System.out.println(testing_overlappingIntervals(A, 16, 21));
         System.out.print(A.tostring());
-        System.out.print(testing_intervalDelete(A, 16, 21));       //enter the interval you want to delete from the tree
+        System.out.print(testing_intervalDelete(A, 16, 21));
         System.out.print(testing_intervalDelete(A, 8, 9));
         System.out.print(testing_intervalDelete(A, 15, 23));
-        //System.out.print(testing_intervalDelete(A, 26, 26));
-        //System.out.print(testing_intervalDelete(A, 7, 25));    //   somthing is wrong hear node with interval 0, 3 is also deleted.
-        //System.out.print(testing_intervalDelete(A, 25, 30));
+        System.out.print(testing_intervalDelete(A, 26, 26));
+        System.out.print(testing_intervalDelete(A, 7, 25));
+        System.out.print(testing_intervalDelete(A, 25, 30));
         //System.out.println("The size of this TREE is: "+A.size);
         System.out.println("The height of this TREE is: "+A.getHeight());
     }
@@ -85,7 +85,7 @@ public class Main {
         Interval in = new Interval(l, h);
         Node an = A.intervalSearchExactly(in);
         if(an == null){return"THIS INTERVAL IS NOT A VALID NODE, YOU MUST HAVE A VALID INTERVAL\n"; }
-        String answer = "This is the tree with with the node:" + an.tostring() +" deleted:\n";
+        String answer = "This is the tree with the node:" + an.tostring() +" deleted:\n";
         A.intervalDelete(an);
         return answer + A.tostring();
     }
