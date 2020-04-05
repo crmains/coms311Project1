@@ -107,11 +107,6 @@ public class IntervalTreap {
             if (y.rightChild == z) {leftUpRotate(y, z);}
             y = z.parent;
         }
-        while(z.parent != null){
-            z = z.parent;
-            z.setHeight();
-        }
-        this.height = this.root.getheight();             // set new height for tree
     }
 
     /**
@@ -135,7 +130,8 @@ public class IntervalTreap {
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
             z.parent.setimax();
         }
-        y.setHeight(); z.setHeight();
+        y.setHeight();
+        reorder_Height(z);
     }
 
     /**
@@ -159,7 +155,20 @@ public class IntervalTreap {
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
             z.parent.setimax();
         }
-        y.setHeight(); z.setHeight();
+        y.setHeight();
+        reorder_Height(z);
+    }
+
+    /**
+     * Reorders the height of each node form h to the root and sets tree height to new root height.
+     * @param h Node
+     */
+    public void reorder_Height(Node h){
+        while(h != null){
+            h.setHeight();
+            h = h.parent;
+        }
+        this.height = this.root.getheight();
     }
 
     /**
@@ -274,6 +283,7 @@ public class IntervalTreap {
     		//Set v's children to u's children
     		v.leftChild = u.leftChild;
     		v.rightChild = u.rightChild;
+    		v.parent = u.parent;                   // christian added this because v was not updating its parent
     		v.setHeight(u.getheight());
     		
     		
