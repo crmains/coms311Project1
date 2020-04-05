@@ -295,8 +295,10 @@ public class IntervalTreap {
     					v.parent.rightChild = v.rightChild;
     			}
     		//Set v's children to u's children
-    		v.leftChild = u.leftChild;
-    		v.rightChild = u.rightChild;
+    		if(u.leftChild != v)
+    			v.leftChild = u.leftChild;
+    		if(u.rightChild != v)
+    			v.rightChild = u.rightChild;
     		v.parent = u.parent;
     		v.setHeight();
     		
