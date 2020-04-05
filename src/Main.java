@@ -11,13 +11,13 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        IntervalTreap A = generate_random_tree(22);
-        //IntervalTreap A = generate_tree_example();
+        //IntervalTreap A = generate_random_tree(22);
+        IntervalTreap A = generate_tree_example();
         //System.out.println(testing_intervalsearch(A, 31, 32));
         //System.out.println(testing_intervalSearchExactly(A, 7, 25));
         //System.out.println(testing_overlappingIntervals(A, 16, 21));
         System.out.print(A.tostring());
-        //System.out.print(testing_intervalDelete(A, 16, 21));       //enter the interval you want to delete from the tree
+        System.out.print(testing_intervalDelete(A, 16, 21));       //enter the interval you want to delete from the tree
         //System.out.println("The size of this TREE is: "+A.size);
         System.out.println("The height of this TREE is: "+A.height);
     }

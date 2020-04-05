@@ -169,43 +169,59 @@ public class IntervalTreap {
     public void intervalDelete(Node z){  // Done but needs testing
         this.size -= 1;
         Node y;
+        
         //PHASE 1
-        if (z.leftChild == null) { transplant(z, z.rightChild); } //P1 Case 1
-        else if (z.rightChild == null) {transplant(z, z.leftChild); } //P1 Case 2
-        else { //P1 Case 3
+        if (z.leftChild == null) 
+        {   //P1 Case 1
+        	transplant(z, z.rightChild); 
+        	y = z.rightChild;
+        } 
+        else if (z.rightChild == null) 
+        {  //P1 Case 2
+        	y = z.leftChild;
+        	transplant(z, z.leftChild);
+        } 
+        else 
+        { //P1 Case 3
             y = z.rightChild;
-            while (y.leftChild != null) {
+            while (y.leftChild != null)
+            {
                 y = y.leftChild;
             }
             transplant(z, y);
         }
         //PHASE 2
-        Node reorder = z;
-        while(!checkPriority(reorder))
+        if(y != null)
         {
-        	if(reorder.leftChild == null)
+        	Node reorder = y;
+        	while(!checkPriority(reorder))
         	{
-        		leftUpRotate(reorder, reorder.rightChild);
-        		reorder = reorder.rightChild;
-        	}
-        	else if(reorder.rightChild == null)
-        	{
-        		rightUpRotate(reorder, reorder.leftChild);
-        		reorder = reorder.leftChild;
-        	}
-        	else
-        	{
-        		if(reorder.leftChild.getPriority() < reorder.rightChild.getPriority())
-        		{
-        			rightUpRotate(reorder, reorder.leftChild);
-        			reorder = reorder.leftChild;
-        		}
-        		else 
+        		System.out.println(this.tostring());
+        		if(reorder.leftChild == null)
         		{
         			leftUpRotate(reorder, reorder.rightChild);
-        			reorder = reorder.rightChild;
+        			//reorder = reorder.rightChild;
+        		}
+        		else if(reorder.rightChild == null)
+        		{
+        			rightUpRotate(reorder, reorder.leftChild);
+        			//reorder = reorder.leftChild;
+        		}
+        		else
+        		{
+        			if(reorder.leftChild.getPriority() < reorder.rightChild.getPriority())
+        			{
+        				rightUpRotate(reorder, reorder.leftChild);
+        				//reorder = reorder.leftChild;
+        			}
+        			else 
+        			{
+        				leftUpRotate(reorder, reorder.rightChild);
+        				//reorder = reorder.rightChild;
+        			}
         		}
         	}
+        	root.setHeight();
         }
         
     }
@@ -274,7 +290,8 @@ public class IntervalTreap {
     		//Set v's children to u's children
     		v.leftChild = u.leftChild;
     		v.rightChild = u.rightChild;
-    		v.setHeight(u.getheight());
+    		v.parent = u.parent;
+    		v.setHeight();
     		
     		
     		//Remove u and return
