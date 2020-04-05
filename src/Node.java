@@ -71,6 +71,14 @@ public class Node {
     }
 
     /**
+     * Sets this nodes height to h
+     * @param h this nodes new height
+     */
+    public void setHeight(int h){
+        this.height = h;
+    }
+
+    /**
      * Returns the height of this node.
      * @return height
      */

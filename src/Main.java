@@ -18,6 +18,11 @@ public class Main {
         //System.out.println(testing_overlappingIntervals(A, 16, 21));
         System.out.print(A.tostring());
         System.out.print(testing_intervalDelete(A, 16, 21));       //enter the interval you want to delete from the tree
+        System.out.print(testing_intervalDelete(A, 8, 9));
+        System.out.print(testing_intervalDelete(A, 15, 23));
+        System.out.print(testing_intervalDelete(A, 26, 26));
+        System.out.print(testing_intervalDelete(A, 7, 25));    //   somthing is wrong hear node with interval 0, 3 is also deleted.
+        System.out.print(testing_intervalDelete(A, 25, 30));
         //System.out.println("The size of this TREE is: "+A.size);
         System.out.println("The height of this TREE is: "+A.height);
     }
@@ -26,7 +31,7 @@ public class Main {
         Random dice = new Random(); int n = 0;
         IntervalTreap A = new IntervalTreap();
         for(n = 0; n < N; n++){
-            Interval a = new Interval(dice.nextInt(Integer.MAX_VALUE-1), dice.nextInt(Integer.MAX_VALUE-1));
+            Interval a = new Interval(dice.nextInt(10000), dice.nextInt(10000));
             Node b = new Node(a);
             A.intervalInsert(b);
         }
