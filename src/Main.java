@@ -10,26 +10,20 @@ import java.util.Random;
 
 public class Main {
 
+
     public static void main(String[] args) {
-        //IntervalTreap A = generate_random_tree(22);
+        //IntervalTreap A = generate_random_tree(100);
         IntervalTreap A = generate_tree_example();
-        //System.out.println(testing_intervalsearch(A, 31, 32));
+        //System.out.println(testing_intervalsearch(A, 9000, 9001));
         //System.out.println(testing_intervalSearchExactly(A, 7, 25));
         //System.out.println(testing_overlappingIntervals(A, 16, 21));
+        //System.out.println("This treap priority is "+ check_treap_priority(A.getRoot(), true));
+        //System.out.println("This treap imax is "+ (check_treap_imax(A.root, null)).tostring());
         System.out.print(A.tostring());
-        System.out.print(testing_intervalDelete(A, 8, 9));
-        System.out.print(testing_intervalDelete(A, 15, 23));
-        System.out.print(testing_intervalDelete(A, 16, 21));
-        System.out.print(testing_intervalDelete(A, 17, 19));
-        System.out.print(testing_intervalDelete(A, 25, 30));
-        System.out.print(testing_intervalDelete(A, 26, 26));
-        System.out.print(testing_intervalDelete(A, 7, 25));
-        System.out.print(testing_intervalDelete(A, 5, 8));
-        System.out.print(testing_intervalDelete(A, 6, 10));
-        System.out.print(testing_intervalDelete(A, 19, 20));
-        System.out.print(testing_intervalDelete(A, 0, 3));
-        System.out.println("The size of this TREE is: "+A.size);
-        System.out.println("The height of this TREE is: "+A.getHeight());
+        //System.out.println(testing_intervalDelete(A,25,30));
+        //System.out.println(testing_intervalDelete(A,26,26));
+        //System.out.println("The size of this TREE is: "+A.size);
+        //System.out.println("The height of this TREE is: "+A.getHeight());
     }
                                // generates treap with N nodes
     public static IntervalTreap generate_random_tree(int N){
@@ -93,5 +87,30 @@ public class Main {
         String answer = "This is the tree with with the node:" + an.tostring() +" deleted:\n";
         A.intervalDelete(an);
         return answer + A.tostring();
+    }
+    public static boolean check_treap_priority(Node current, boolean answer){
+        if(current.leftChild != null){
+            if(current.priority > current.leftChild.priority){ return false; }
+            answer = check_treap_priority(current.leftChild, answer);
+        }
+        if(current.rightChild != null){
+            if(current.priority > current.rightChild.priority){ return false; }
+            answer = check_treap_priority(current.rightChild, answer);
+        }
+        return answer;
+    }
+    public static Node check_treap_imax(Node current, Node answer){
+        if(current == null){ return answer; }
+        int imax = current.i.high;
+        if(current.leftChild != null){
+            if(current.leftChild.iMax > imax){ imax = current.leftChild.iMax; }
+        }
+        if(current.rightChild != null){
+            if(current.rightChild.iMax > imax){ imax = current.rightChild.iMax; }
+        }
+        if(current.iMax != imax){ return current; }
+        answer = check_treap_imax(current.leftChild, answer);
+        answer = check_treap_imax(current.rightChild, answer);
+        return answer;
     }
 }

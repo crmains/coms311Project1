@@ -94,11 +94,13 @@ public class IntervalTreap {
         if (y == null) {this.root = z; }
         else if (z.i.low < y.i.low) {
             y.leftChild = z;
-            y.setimax(); y.setHeight();
+            //y.setimax(); y.setHeight();    // resubmission change
+            reorder_Height(y);               // resubmission change
         }
         else {
             y.rightChild = z;
-            y.setimax(); y.setHeight();
+            //y.setimax(); y.setHeight();    // resubmission change
+            reorder_Height(y);               // resubmission change
         }
                                                                // end of insertion
         while (y != null && y.priority > z.priority) {         //Start Rotation
@@ -122,15 +124,15 @@ public class IntervalTreap {
         z.parent = y.parent;              // rotate z up and y down
         z.rightChild = y;
         y.parent = z;
-        y.setimax(); z.setimax();
+        //y.setimax(); z.setimax();                    //resubmission change
         if(z.parent == null){this.root = z;}           // if y has a parent or is root
         else{
             if (z.parent.leftChild == y) { z.parent.leftChild = z; }
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
-            z.parent.setimax();
+            // z.parent.setimax();                       // resubmission change
         }
-        y.setHeight();
-        reorder_Height(z);
+        //y.setHeight();                     // resubmission change
+        reorder_Height(y);                  // resubmission change
     }
 
     /**
@@ -147,15 +149,15 @@ public class IntervalTreap {
         z.parent = y.parent;                   // rotate z up and y down
         z.leftChild = y;
         y.parent = z;
-        y.setimax(); z.setimax();
+        // y.setimax(); z.setimax();               // resubmission change
         if(z.parent == null){this.root = z;}      // if y has a parent or is root
         else{
             if (z.parent.leftChild == y) { z.parent.leftChild = z; }
             if (z.parent.rightChild == y) {z.parent.rightChild = z; }
-            z.parent.setimax();
+            //z.parent.setimax();                        // resubmisssion change
         }
-        y.setHeight();
-        reorder_Height(z);
+        //y.setHeight();                          // resubmission change
+        reorder_Height(y);                       // resubmission change
     }
 
     /**
@@ -165,6 +167,7 @@ public class IntervalTreap {
     public void reorder_Height(Node h){
         while(h != null) {
             h.setHeight();
+            h.setimax();                                // resubmission change
             h = h.parent;
         }
     }
@@ -280,12 +283,14 @@ public class IntervalTreap {
      */
     public void transplant(Node u, Node v)
     {
+        Node r;                               // resubmission change
     	if(v == null) //NULL CASE
     	{
     		if(u.parent.leftChild == u)
     			u.parent.leftChild = null;
     		if(u.parent.rightChild == u)
     			u.parent.rightChild = null;
+    		reorder_Height(u.parent);                   // resubmission change
     	}
     	else
     	{
@@ -328,10 +333,11 @@ public class IntervalTreap {
                 v.rightChild = u.rightChild;
                 if(u.rightChild != null){u.rightChild.parent = v;}
             }
+    		r = v.parent;                       // resubmission change
     		v.parent = u.parent;
-    		v.setHeight();
-    		
-    		
+    		reorder_Height(v);                          // resubmission change
+            reorder_Height(r);                          // resubmission change
+
     		//Remove u and return
     		u = null;
     		return;
